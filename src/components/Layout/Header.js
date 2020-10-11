@@ -15,7 +15,7 @@ const Header = ({ signOut, authenticated, userId }) => {
         <Link to="/" className="right menu">
           All streams
         </Link>
-        {!authenticated ? (
+        {!userId ? (
           <div>
             <div>
               <Link to="/signup" className="right menu">

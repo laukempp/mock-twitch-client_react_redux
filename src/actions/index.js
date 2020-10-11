@@ -39,7 +39,7 @@ export const signIn = (email, password) => async (dispatch) => {
       type: SIGN_IN,
       payload: { token: response.data.token, userId: response.data.userId },
     });
-    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("user", response.data.userId);
   } catch {
     dispatch({
       type: AUTH_ERROR,
@@ -49,7 +49,7 @@ export const signIn = (email, password) => async (dispatch) => {
 };
 
 export const signOut = () => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("user");
   return {
     type: SIGN_OUT,
     payload: "",
@@ -74,8 +74,16 @@ export const fetchStream = (id) => async (dispatch) => {
   });
 };
 
-export const createStream = (title, description) => async (dispatch) => {
-  const response = await streamService.post("/streams", { title, description });
+export const createStream = (title, description) => async (
+  dispatch,
+  getState
+) => {
+  const { userId } = getState().auth;
+  const response = await streamService.post("/streams", {
+    title,
+    description,
+    userId,
+  });
 
   dispatch({
     type: CREATE_STREAM,
