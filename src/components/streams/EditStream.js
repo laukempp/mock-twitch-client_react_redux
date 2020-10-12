@@ -6,6 +6,7 @@ import StreamForm from "./StreamForm";
 const EditStream = ({ stream, match, fetchStream, editStream }) => {
   useEffect(() => {
     fetchStream(match.params.id);
+    console.log("UseEffecitssä", stream);
   }, []);
 
   const handleSubmit = (title, description) => {
@@ -17,6 +18,7 @@ const EditStream = ({ stream, match, fetchStream, editStream }) => {
   }
   return (
     <div>
+      {console.log("renderissä", stream)}
       <h3>Edit a Stream</h3>
       <StreamForm
         handleSubmit={handleSubmit}
@@ -28,6 +30,7 @@ const EditStream = ({ stream, match, fetchStream, editStream }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  console.log("mapstatetopropsissa");
   return { stream: state.streams[ownProps.match.params.id] };
 };
 
