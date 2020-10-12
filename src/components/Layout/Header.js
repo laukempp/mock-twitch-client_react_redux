@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/index";
 
-const Header = ({ signOut, authenticated, userId }) => {
+const Header = ({ signOut, userId }) => {
   console.log(userId);
-  console.log(authenticated);
   return (
     <div className="ui secondary pointing menu">
       <Link to="/" className="item">

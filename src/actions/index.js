@@ -1,3 +1,5 @@
+import streamService from "../apis/streams";
+import history from "../utils/history";
 import {
   SIGN_IN,
   SIGN_OUT,
@@ -9,8 +11,6 @@ import {
   DELETE_STREAM,
 } from "./types";
 import authService from "../apis/auth";
-import streamService from "../apis/streams";
-import streams from "../apis/streams";
 
 export const signUp = (email, password) => async (dispatch) => {
   try {
@@ -89,10 +89,11 @@ export const createStream = (title, description) => async (
     type: CREATE_STREAM,
     payload: response.data,
   });
+  history.push("/");
 };
 
 export const editStream = (id, title, description) => async (dispatch) => {
-  const response = await streamService.put(`/streams/${id}`, {
+  const response = await streamService.patch(`/streams/${id}`, {
     title,
     description,
   });
@@ -101,6 +102,7 @@ export const editStream = (id, title, description) => async (dispatch) => {
     type: EDIT_STREAM,
     payload: response.data,
   });
+  history.push("/");
 };
 
 export const deleteStream = (id) => async (dispatch) => {
