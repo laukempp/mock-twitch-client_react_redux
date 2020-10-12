@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { fetchStream } from "../../actions/index";
 
-const ShowStream = () => {
-  return <div>ShowStream</div>;
+const ShowStream = ({ stream, fetchStream, match }) => {
+  useEffect(() => {
+    fetchStream(match.params.id);
+  }, []);
+
+  if (!stream) {
+    return <div>loading</div>;
+  }
+
+  return (
+    <div>
+      <h1>{stream.title}</h1>
+      <h5>{stream.description}</h5>
+    </div>
+  );
 };
 
-export default ShowStream;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    stream: state.streams[ownProps.match.params.id],
+  };
+};
+
+export default connect(mapStateToProps, { fetchStream })(ShowStream);
